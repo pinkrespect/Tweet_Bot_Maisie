@@ -11,14 +11,15 @@ my_name = '@' + api.me().screen_name.lower() # my_name = str
 # api.me().screen_name is sometimes doesn't fit who mentioned lower or upper case screen name.
 
 try:
-    #mentioned_id, mentioned_user, mentioned_text =
-    Mention(api.mentions_timeline(), my_name)
-    #if mentioned_id+mentioned_user+mentioned_text != 0:
-        # mentioned_user & mentioned_text need to change data type
+    mentions = api.mentions_timeline()
+    mentioned_data_dict = {}
+    for mention in mentions:
+        mentioned_data_dict[mention] = Mention(mentions, my_name)
+        
+    #if mentioned_id+mentioned_user+mentioned_text == 0:
     #    print('https://www.twitter.com/'+ mentioned_user +'/status/'+ mentioned_id, mentioned_text)
-    #else:
     #    raise Unexceptable_Error()
-    pass
+
 except tweepy.TweepError as Err:
     api.update_status(Error_Codes(Err.api_code))
 

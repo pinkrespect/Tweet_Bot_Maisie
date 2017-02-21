@@ -1,4 +1,4 @@
-import tweepy
+import tweepy, time
 from Twitter_auths import *
 from Twitter_Bot_Defs import *
 from Twitter_Bot_Errors import *
@@ -10,18 +10,25 @@ api = tweepy.API(auth)
 my_name = '@' + api.me().screen_name.lower() # my_name = str
 # api.me().screen_name is sometimes doesn't fit who mentioned lower or upper case screen name.
 
-try:
-    mentions = api.mentions_timeline()
-    mentioned_data_dict, follow_yet_dict = Mention(mentions, my_name)
-    print(mentioned_data_dict.keys(), mentioned_data_dict)
+while(1):
+    try:
+        mentions = api.mentions_timeline()
+        URLs_dict, follow_yet_dict = Mention(mentions, my_name)
+        if (URLs_dict is not None) and (follow_yet_dict is not None):
+             for key in URLs_dict:
+                print('@' + str(URLs_dict[key][0]) + " " + str(URLs_dict[key][1]))
+                api.update_status('@' + str(URLs_dict[key][0]) + " " + str(URLs_dict[key][1]) + str(URLs_dict[key][2]), key)
+                api.create_favorite(key)
 
+        else:
+            print('sleep')
+            time.sleep(20)
+            print('wakeup')
 
-    #if mentioned_id+mentioned_user+mentioned_text == 0:
-    #    print('https://www.twitter.com/'+ mentioned_user +'/status/'+ mentioned_id, mentioned_text)
-    #    raise Unexceptable_Error()
+    except tweepy.TweepError as Err:
+        api.update_status(Error_Codes(Err.api_code)) #봇 주것을때 타임스탬프 ㅠ
+        pass
 
-except tweepy.TweepError as Err:
-    api.update_status(Error_Codes(Err.api_code))
-
-except Unexceptable_Error:
-    api.update_status(Error_Codes(000) + ADMIN_SCREEN_NAME)
+    except Unexceptable_Error:
+        api.update_status(Error_Codes(000) + ADMIN_SCREEN_NAME)
+        pass

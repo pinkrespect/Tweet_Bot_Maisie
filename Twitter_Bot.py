@@ -12,10 +12,10 @@ my_name = '@' + api.me().screen_name.lower() # my_name = str
 
 try:
     mentions = api.mentions_timeline()
-    mentioned_data_dict = {}
-    for mention in mentions:
-        mentioned_data_dict[mention] = Mention(mentions, my_name)
-        
+    mentioned_data_dict, follow_yet_dict = Mention(mentions, my_name)
+    print(mentioned_data_dict.keys(), mentioned_data_dict)
+
+
     #if mentioned_id+mentioned_user+mentioned_text == 0:
     #    print('https://www.twitter.com/'+ mentioned_user +'/status/'+ mentioned_id, mentioned_text)
     #    raise Unexceptable_Error()

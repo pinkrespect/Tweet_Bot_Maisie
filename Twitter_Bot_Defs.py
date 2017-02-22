@@ -21,12 +21,13 @@ def Mention(mentions, my_name):
 # 추후 여기에 else 구문 고민 해 볼것
             URLs_dict = {}
             URLs_dict = Make_URLs(mentioned_data_dict)
-            print(URLs_dict)
             return URLs_dict, follow_yet_dict
         else:
             return None, None
 
 def My_Name_Index(new_text, my_name):
+    ''' 해당 mention string에서 my_name 스트링이 위치하는 곳을 찾아서
+        단어 시작 index와 단어 종료 index를 추출합니다.'''
     if my_name + " " in new_text:
         My_name_len = len(my_name)+1
     elif my_name in new_text:
@@ -49,7 +50,7 @@ def Make_URLs(mentioned_data_dict):
             search_word = 'http://search.naver.com/search.naver?query=' + search_word
             URLs_dict[number] = [mentioned_data_dict[number][0], search_word, original_word]
 
-        if "구글" in mentioned_data_dict[number][1]:
+        elif "구글" in mentioned_data_dict[number][1]:
             start_index, end_index = My_Name_Index(mentioned_data_dict[number][1], '구글')
             search_word = mentioned_data_dict[number][1].replace(mentioned_data_dict[number][1][start_index:end_index], "")
             original_word = search_word##
@@ -57,6 +58,7 @@ def Make_URLs(mentioned_data_dict):
             search_word = search_word.replace("%20", "+")
             search_word = 'http://www.google.com/search?q=' + search_word
             URLs_dict[number] = [mentioned_data_dict[number][0], search_word, original_word]
+            
     return URLs_dict
 
 def Follow(follow_yet_dict):

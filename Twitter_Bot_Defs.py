@@ -2,11 +2,12 @@
 from urllib.parse import quote
 
 def Mention(mentions, my_name):
+    '''행동 단계를 정해주자 1. 계정에서 할 행동 2. Make_URL '''
     mentioned_data_dict = {}
     follow_yet_dict = {}
     for mention in mentions:
         new_text = mention.text.lower()
-        if (my_name in new_text) or (mention.favorited is False):
+        if my_name in new_text:
             start_index, end_index = My_Name_Index(new_text, my_name)
             new_text = mention.text.replace(mention.text[start_index:end_index], "")
 
@@ -18,7 +19,10 @@ def Mention(mentions, my_name):
 
             elif "팔로" in new_text:
                 follow_yet_dict[mention.id] = [mention.user.screen_name, new_text]
-# 추후 여기에 else 구문 고민 해 볼것
+
+            else:
+                return None, None
+
             URLs_dict = {}
             URLs_dict = Make_URLs(mentioned_data_dict)
             return URLs_dict, follow_yet_dict
@@ -40,8 +44,20 @@ def My_Name_Index(new_text, my_name):
 
 def Make_URLs(mentioned_data_dict):
     URLs_dict = {}
+    '''여기 있는 것좀 어케 줄이든가 치우든가 하자....ㅡㅡ'''
     for number in mentioned_data_dict.keys():
-        if "네이버" in mentioned_data_dict[number][1]:
+        if ("구글" and "네이버") in mentioned_data_dict[number][1]:
+            start_index, end_index = My_Name_Index(mentioned_data_dict[number][1], '구글')
+            search_word = mentioned_data_dict[number][1].replace(mentioned_data_dict[number][1][start_index:end_index], "")
+            start_index, end_index = My_Name_Index(search_word, '네이버')
+            search_word = search_word.replace(search_word[start_index:end_index], "")
+            original_word = search_word##
+            search_word = quote(search_word, safe='')
+            search_word = search_word.replace("%20", "+")
+            search_word = 'http://www.google.com/search?q=' + search_word + '\nhttp://search.naver.com/search.naver?query=' + search_word
+            URLs_dict[number] = [mentioned_data_dict[number][0], search_word, original_word]
+
+        elif "네이버" in mentioned_data_dict[number][1]:
             start_index, end_index = My_Name_Index(mentioned_data_dict[number][1], '네이버')
             search_word = mentioned_data_dict[number][1].replace(mentioned_data_dict[number][1][start_index:end_index], "")
             original_word = search_word##
@@ -58,7 +74,8 @@ def Make_URLs(mentioned_data_dict):
             search_word = search_word.replace("%20", "+")
             search_word = 'http://www.google.com/search?q=' + search_word
             URLs_dict[number] = [mentioned_data_dict[number][0], search_word, original_word]
-            
+
+        
     return URLs_dict
 
 def Follow(follow_yet_dict):

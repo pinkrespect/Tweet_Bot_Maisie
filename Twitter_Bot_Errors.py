@@ -1,7 +1,17 @@
-import time
-import datetime
+"""
+Twitter_Bot_Errors.
+
+This module catches expectable error  number from tweepy module.
+"""
+
 
 def Error_Codes(integer):
+    """
+    Error_Codes.
+
+    tweepy error module returns for it some integer.
+    """
+
     if integer == 187:
         tweets = "\nDefeat accepted.\nError Code:" + str(integer) + ' - 중복 트윗'
     elif integer == 139:

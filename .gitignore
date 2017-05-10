@@ -3,12 +3,9 @@
 
 auths.py
 new/auth.py
-<<<<<<< HEAD
 
 # pycache
 __pycache__/
 .mypy_cache/
 new/__pycache__/
 new/.mypy_cache/
-=======
->>>>>>> 94385450c3020f07c2700e3c98d5afaaf9f8af83

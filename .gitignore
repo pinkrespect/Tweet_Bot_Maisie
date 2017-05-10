@@ -5,7 +5,7 @@ auths.py
 new/auth.py
 
 # pycache
-__pycache__/
-.mypy_cache/
-new/__pycache__/
-new/.mypy_cache/
+**/__pycache__
+**/.mypy_cache
+**/new/__pycache__
+**/new/.mypy_cache

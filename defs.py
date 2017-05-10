@@ -24,11 +24,12 @@ def index_extracter(new_text, word):
     return start_index, end_index
 
 
-def make_urls()
+def make_urls():
+	for number in SITE_keys:
+
 
 
 def categorize(mentions, target_text):
-
     mentioned = {}
     follow_yet = {}
     for word in mentions:
@@ -52,5 +53,6 @@ def categorize(mentions, target_text):
 
             urls = make_urls(mentioned)
             return urls, follow_yet
+
         else:
             return None, None

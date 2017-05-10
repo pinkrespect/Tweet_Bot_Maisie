@@ -6,9 +6,10 @@ import time
 import datetime
 import tweepy
 from tweepy.streaming import StreamListener
-from Twitter_auths import C_KEY, C_SECRET, A_TOKEN_KEY, A_TOKEN_SECRET
-from Twitter_Bot_Errors import Error_Codes
-from Twitter_Bot_Defs import Mention
+from auths import C_KEY, C_SECRET, A_TOKEN_KEY, A_TOKEN_SECRET
+from errors import Error_Codes
+
+from defs import Mention
 
 
 if __name__ == "__main__":
@@ -81,7 +82,7 @@ def Run_Bot():
     """
     Run_Bot.
 
-    actually Bot will run here.
+    actually Bot will runs here.
     """
     print('start process')
     api.update_status("Welcome to Holo-Pearl version 0.00000001.")

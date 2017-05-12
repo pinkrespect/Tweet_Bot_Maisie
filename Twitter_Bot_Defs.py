@@ -54,7 +54,6 @@ def mention(mentions, my_name):
             return None, None
 
 
-
 def make_urls(mentioned_data_dict):
     """
     make_urls.

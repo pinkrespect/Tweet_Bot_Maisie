@@ -5,6 +5,23 @@
 from urllib.parse import quote
 
 
+def my_name_index(new_text, my_name):
+    '''
+    my_name_index.
+
+    해당 mention string에서 my_name 스트링이 위치하는 곳을 찾아서
+    단어 시작 index와 단어 종료 index를 추출합니다.
+    '''
+    if my_name + " " in new_text:
+        my_name_len = len(my_name)+1
+    elif my_name in new_text:
+        my_name_len = len(my_name)
+
+    start_index = new_text.find(my_name)
+    end_index = start_index + my_name_len
+    return start_index, end_index
+
+
 def mention(mentions, my_name):
     """행동 단계를 정해주자 1. 계정에서 할 행동 2. Make_URL """
     mentioned_data_dict = {}
@@ -36,22 +53,6 @@ def mention(mentions, my_name):
         else:
             return None, None
 
-
-def my_name_index(new_text, my_name):
-    '''
-    my_name_index.
-
-    해당 mention string에서 my_name 스트링이 위치하는 곳을 찾아서
-    단어 시작 index와 단어 종료 index를 추출합니다.
-    '''
-    if my_name + " " in new_text:
-        my_name_len = len(my_name)+1
-    elif my_name in new_text:
-        my_name_len = len(my_name)
-
-    start_index = new_text.find(my_name)
-    end_index = start_index + my_name_len
-    return start_index, end_index
 
 
 def make_urls(mentioned_data_dict):

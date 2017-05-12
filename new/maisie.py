@@ -12,7 +12,7 @@ from tweepy.streaming import StreamListener
 
 from auth import C_KEY, C_SECRET, A_TOKEN_KEY, A_TOKEN_SECRET
 # from errors import Error_codes
-from defs import mention
+from defs import guess_mention
 
 
 # When It imported as module, It raise Keyboard Interrupt error.

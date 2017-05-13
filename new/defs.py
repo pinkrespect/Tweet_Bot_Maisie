@@ -44,7 +44,7 @@ def extract_index(rough_mention, target_word):
         return start, end  # TODO: Is this it's best?
     # If there is no target_word in rough_mention.
     else:
-        return False, False
+        return 0, 0
 
 
 def url_parse(data):
@@ -55,13 +55,13 @@ def url_parse(data):
     """
     urls = {}
     """
-    We make mention string to send user include URL in this function,
+    We make a mention string to send user include URL in this function,
     and store in urls dictionary.
     """
     for tweet_id in data.keys():
         for sites_key in SITES_KEYS:
             start, end = extract_index(data[tweet_id][1], sites_key)
-            if (start and end) is True:
+            if (start and end) is not 0:
 
 
 
